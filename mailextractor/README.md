@@ -1,0 +1,1 @@
+mailextractor is a python script which extracts an email addresses from a given html page

@@ -1,0 +1,1 @@
+fsplitter is a script I developed for practice which splits and joins files.
