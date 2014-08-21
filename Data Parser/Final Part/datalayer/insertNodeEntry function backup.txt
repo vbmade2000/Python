@@ -1,0 +1,27 @@
+def insertNodeTableEntry(self, vid, recipetitle, link):
+		'''This function inserts entry in <node> table.
+			Parameters : vid - Primary key value of newly created record in <node_revision> table. It can be retrieved by calling 
+								insertNodeRevisionTableEntry() function.
+						 recipetitle - Title of the recipe to be inserted.
+			Returns : nid (integer) value of newly inserted node record
+		'''
+		nid = -1 # Variable to hold primary key of newly inserted record in node table
+		count = self.getMaxVidFromNodeTable()
+		if count is None:
+			count = 1
+		else:
+			count = int(count) + 1
+		modified_title = mysql.escape_string(self.escape(recipetitle.strip().encode('UTF-8','ignore')))
+		print "->>>>>>>>Count" + str(count)
+		print "=> Entered into function insertNodeTableEntry"
+		linkparts = urlparse(link)
+		wesite_domain = linkparts.netloc
+		default_uid = self._mappingdict.get('www.default.com','1')
+		recipe_uid = self._mappingdict.get(wesite_domain, default_uid)
+		print "->>>>>>>>>>>>>>Recipe UID : " + recipe_uid
+		self._cursor.execute("INSERT INTO node (vid, title, type, uid, language) VALUES(%s, '%s', 'recipe', %s, 'und');" % (count, modified_title, recipe_uid)) 
+		self._cursor.execute("SELECT LAST_INSERT_ID()") # Get auto incremented Primary key of newly inserted row 
+		#self._connection.commit()
+		results = self._cursor.fetchall()
+		 
+		return results[0][0] # Return value of <nid> column of newly inserted record

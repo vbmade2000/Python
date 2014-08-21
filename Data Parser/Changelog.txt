@@ -1,0 +1,448 @@
+Serial No : 36
+Version : 1.6.2
+Date : 3-12-2013
+Time : 
+Type : Issue faced by client
+Description : Basically the Serves/Yield field is Not updating correctly.
+The Yield field is numeric, so it only takes in numeric data, so data like 6 dozen or 3 - 4 slices etc are not stored correctly.
+Solution : Yet to be implemented
+
+====================================================================================================================
+Serial No : 35
+Version : 1.6.1
+Date : 3-10-2013
+Time : 6:37 PM
+Type : Facility wanted by client
+Description : Client told that to keep recipe unpublished the making <status> column value 0 of <node> table is not enough.
+              We have to make status column value in <node_revision> to be also 0.
+Solution  : MOdified insertNodeRevisionTableEntry() function in datalayer.py file to include <status> column and it's value 0.
+====================================================================================================================
+Serial No : 34
+Version : 1.6.0
+Date : 2-10-2013
+Time : 6:50 PM
+Type : Facility wanted by client
+Description : Client wanted to resize image to size of 250x250 before saving image to folders.
+Solution : -> Created getTempFile() function in datalayer.py that returns temporary file name to be created.
+           -> Modified downloadImageFromURI() function in datalayer.py file to resize downloaded image before saving. 
+              Used <Image> package for resize operation.
+====================================================================================================================
+Serial No : 33
+Version : 1.5.0
+Date : 2-10-2013
+Time : 10:54 AM
+Type : Facility wanted by client
+Description : Client wants that recipe should not be published by default. So he wants a value of <status> column to be 0.
+Solution : Modified insertNodeTableEntry() function in datalayer.py file to include status column and it's default value 0 in insert sql query.
+====================================================================================================================
+Serial No : 32
+Version : 1.4.9
+Date : 1-10-2013
+Time : 11:13 AM
+Type : Facility wanted by 
+Description : Client got same case sensitivity issue like recipeinstructions in http://www.goodtoknow.co.uk/recipes/536447/carrot-and-butternut-squash-soup for
+              recipeyield. 
+Solution  : Modified schemaparser.py file to insert code to parse recipeyield. Just copied previous code to parse recipeyield. This code can be dangerous in
+            future as it can cause issue.
+====================================================================================================================
+Serial No : 31
+Version : 1.4.8
+Date : 30-09-2613
+Time : 2:53 PM
+Type : Issue faced by client 
+Description : Client complainted that when there is no recipe image defined in webpage so there is blank value inserted 
+              in <uri> column in <file_managed> table. But this column has unique constraint so there can not be default value for that.
+              So checked live database for recipes with no image and found that image record is not inserted in file_managed table.
+              For that particular recipe with no image foreign key value will be 0 in <recipe> table.
+Solution : -> Modified insertImageTableEntry() function in datalayer.py file 
+           -> If length of <uri> argument is 0 then record in file_managed table will not be inserted.
+           -> If record will be inserted then primaey key of the newly created record will be returned, otherwise 0 will be
+              returned.              
+====================================================================================================================
+Serial No : 30
+Version : 1.4.7
+Date : 30-09-2013
+Time : 12:06 PM
+Type : Issue faced by client 
+Description : When parsing hRecipe format in http://allrecipes.co.uk urls, there were no <photo> item for recipe. So uri goes blank
+              and due to that urllib gives error in downloading image file in downloadImageFromURI() in datalayer.py file.
+Solution : -> Modified insertImageTableEntry() fucntion in datalayer.py to check that uri is coming blank or not.
+           -> If uri is coming blank then value of <image_file_name> will be blank.
+====================================================================================================================
+Serial No : 29
+Version : 1.4.6
+Date : 30-09-2013
+Time : 11:57 PM
+Type : Issue faced by client 
+Description : Client complainted that recipes from http://allrecipes.co.uk are not being parsed correctly. Example url is 
+              'http://allrecipes.co.uk/recipe/8345/toffee-apple-cake.aspx\n'. 
+Solution : By observing url we can see that there is a new line character ("\n"). So modified entrypoint __main__ in 
+           dataintegrator.py file to strip "\n" character from url fetched from urls.txt. Modified grabDataFromSingleUrl()
+           function call in __main__ entry point to strip("\n") character.
+====================================================================================================================
+Serial No : 28
+Version : 1.4.5
+Date : 28-09-2013
+Time : 12:00 PM
+Type : Issue faced by client 
+Description : We are inserting link to a original source site if there is not preparation direction specified. But as we
+              are replacing html tags with ascii codes. Link to original site is not displayed properly according to
+              client.
+Solution  : -> Modified function insertPreparationTableEntry() in datalayer.py 
+            -> Introduced a new boolean variable <link_inserted> which is False by default.
+            -> It will be true if length of preparation list (prepStepList variable) is 0.
+            -> Modified for loop to check if <link_inserted> variable is true.
+            -> If that variable is true then do not use mysql.escape_string function or self.escape function.
+====================================================================================================================
+Serial No : 27
+Version : 1.4.4
+Date : 27-09-2013
+Time : 3:52 PM
+Type : Facility wanted by client
+Description : Client wants to store image in 2 folders. In one folder we have already downloaded and stored images.
+              Now there is a need to store images in another folder.
+Solution : -> Created a setting RESIZED_IMAGE_STORAGE_PATH in settings.py
+           -> Imported <shutil> module in datalayer.py to use file copy functionality
+           -> Modified datalayer.py file to include <imageresizepath> in constructor of DataManager class.
+           -> Modified every instantiation of DataManager class in dataintegrator.py file to include supply
+              value for <imageresizepath> argument which is coming from RESIZED_IMAGE_STORAGE_PATH setting defined in 
+              settings.py.
+           -> Modified downloadImageFromURI() function in datalayer.py to create file at second location  
+           -> Again returning a single value (path of locally stored images) from a function downloadImageFromURI() in 
+              datalayer.py
+====================================================================================================================
+Serial No : 26
+Version : 1.4.3
+Date : 27-09-2013
+Time : 3:25 PM
+Type : Facility wanted by client
+Description : Client wants that status column in file_managed table should be 1 to display image correctly
+Solution : Modified insertImageTableEntry() function datalayer.py file to include <status> column and it's respected 
+           value in insert query
+====================================================================================================================
+Serial No : 25
+Version : 1.4.2
+Date : 27-09-2013
+Time : 1:34 PM
+Type : Facility wanted by client
+Description : Client wants that all the nutritional contents (calories, fat, saturatedFat, salt, sugar) should come in 
+              numerical format.
+Solution : -> Modified insertRecipeTableEntry() functin in datalayer.py. 
+           -> Introduced variable <extracted_fat> to store extracted number from fat value derived by passing fat value
+              to extractNoFromText() function.
+           -> Introduced variable <modified_fat> to get first element of <extracted_fat> variable as it is a list
+           -> Modified insert query to supply value of <modified_fat> variable instead of fat value directly
+          
+
+	   -> Introduced variable <extracted_saturates> to store extracted number from saturates value derived by 
+              passing saturates value to extractNoFromText() function.
+           -> Introduced variable <modified_saturates> to get first element of <extracted_saturates> variable as it is a 
+              list
+           -> Modified insert query to supply value of <modified_saturates> variable instead of saturates value directly
+
+	   -> Introduced variable <extracted_sugar> to store extracted number from sugar value derived by 
+              passing sugar value to extractNoFromText() function.
+           -> Introduced variable <modified_sugar> to get first element of <extracted_sugar> variable as it is a 
+              list
+           -> Modified insert query to supply value of <modified_sugar> variable instead of sugar value directly
+====================================================================================================================
+Serial No : 24
+Version : 1.4.2
+Date : 27-09-2013
+Time : 1:34 PM
+Type : Facility wanted by client
+Description : Client wants that salt value should be in mg and client sites uses unit g. So there is a need to convert
+              unit. Client suggested that extract float no from salt value and divide that no by 1000.
+Solution : -> Modified function extractNoFromText() in datalayer.py.
+           -> Changed re.findall('\d+', text) tore.findall('\d*.\d+', text) to extract float value from string
+           -> Modified function insertRecipeTableEntry() in datalayer.py. 
+           -> Declared new variable <extracted_salt> to store newly extracted salt value from textual input
+           -> Declared new variable <modified_salt> to store value of <extracted_salt/1000 to convert mg to g.
+           -> Modified insert query to use value of <modified_salt> variable instead of directly using value of 
+              function argument
+====================================================================================================================
+Serial No : 23
+Version : 1.4.1
+Date : 26-09-2013
+Time : 7:18 PM
+Type : Issue faced by client
+Description : Script was modified to make <nid> and <vid> column same. But client said that when script failes then <nid>
+              and <vid> get missmatched. He suggested a solution described below.
+Client Suggestino in his words : The fix you have added is this
+		#self._connection.commit()
+		results = self._cursor.fetchall()
+		nid =  results[0][0]
+		self._cursor.execute("UPDATE node SET vid = %s WHERE nid = %s;" % (nid, nid))
+
+               This will in all cases make the VID be same as NID..... Almost correct, but if we get any Parse failures, than we are still updating the value of the VID to be the max NID... This means that Drupal will potentially display invalid recipe data...
+
+               What i think needs to happen is that the getMaxVidFromNodeTable should get back the max VID from the node_revision table.
+               If for whatever reason there is an error New NID wont get created and there is an error there will be a mismatch between NID and VID ==> So we Wont display the recipe.... 
+               But for next correct parsed recipe we will retrieve the correct MAX VID and it will match the new NID...
+Solution : -> Modified getMaxVidFromNodeTable() in datalayer.py file function to retrieve max value from <node_revision> table instead of <node> tabel.
+====================================================================================================================
+Serial No : 22
+Version : 1.4.0
+Date : 26-09-2013
+Time : 3:54 PM
+Type : Facility wanted by Client
+Description : Earlier client told that uri of recipe image should be stored in <uri> column of file_managed table of database.
+              That facility was implemented but then client complainted that image is not displayed. So drupal developer Chanchal Debnath
+              hired by the company figured out that drupal recipe module can only display recipe image if it is stored locally.
+	      So client now wants to store images locally as his desired folder. 
+Solution : -> Defined new setting IMAGE_STORAGE_PATH in settings.py. 
+           -> Created downloadImageFromURI() function in datalayer.py file to download image amd store locally.
+           -> Modified DataManager class in datalayer.py and included <imagepath> argument to constructor of class.
+           -> Modified all instantiation of DataManager class in dataintegrator.py file to pass value for imagepath argument.
+           -> Modified insertImageTableEntry() function in datalayer.py and called downloadImageFromURI() function to download image
+              file.
+           -> Modified insert query to change value of <uri> column from uri of image to local file path returned 
+              by function downloadImageFromURI()
+====================================================================================================================
+Serial No : 21
+Version : 1.3.0
+Date : 26-09-2013
+Time : 1:45 PM
+Type : Problem faced by me at testing
+Description : There was a problem in parsing and inserting preparation steps in insertPreparationTableEntry() function due to unicode-ascii conversion.
+Solution : Modified insertPreparationTableEntry() function. Used self.escape() function to escape special characters. Already mysql.escape_string was used and
+           string.encode('UTF-8','ignore') was also used.
+====================================================================================================================
+Serial No : 20
+Version : 1.2.9
+Date : 26-09-2013
+Time : 1:11 PM
+Type : Facility wanted by client
+Description : Client wants to insert unix timestamp value of current date into <created> and <changed> column of <node>
+              table.
+Solution : -> Created new function getCurrrentUnixTimeStamp() in datalayer.py to generate unix timestamp for current date-time.
+           -> Modified function insertNodeTableEntry() in datalayer.py and modified insert query to include <created> and <changed>
+              columns in <node> table.   
+====================================================================================================================
+Serial No : 19
+Version : 1.2.8
+Date : 24-09-2013
+Time : 1:36 PM
+Type : Facility wanted by client
+Description : Client said that when script fails to insert data into table due to any issue, title comes in wrong way. It takes title of some previous recipe.
+              According to Mr. Rajesh Kala (Drupal developer of client Mr. Vishal Chavda) <nid> and <vid> column value must be same in node table. He tried on client end and issue was solved.
+              So there is a need to make <nid> in <vid> column value same in node table.
+Solution : -> In insertNodeTableEntry() function declared a variable nid to hold a primary key of newly inserted record in node table.
+           -> Assigned previously created variable count value + 1 to <vid> column in insert query in insertNodeTableEntry() function.
+	   -> After that insert query fired, executed another <UPDATE>  query to update <vid> column in <node> table.
+              This time assigned value of <nid> that contains nid of newly inserted record in <node> table.
+              The solution seems to work on local end.
+====================================================================================================================
+Serial No : 18
+Version : 1.2.7
+Date : 24-09-2013
+Time : 1:36 PM
+Type : Facility wanted by client
+Description : Client wants that in node table link_description should be domain name of recipe link without www. So for example
+              if recipe url is www.food.com/recipes/testrecipe.html then link_description should be food.com.
+Solution : Modified insertRecipeTableEntry() function in datalayer.py file. Used urlparse module to extract required data.
+           Modified insert query to insert link_description column and it's value.
+====================================================================================================================
+
+Serial No : 17
+Version : 1.2.6
+Date : 24-09-2013
+Time : 1:36 PM
+Type : Facility wanted by client
+Description : Clients wants that default language for recipe should be undefined. So the value in database should be "und"
+Solution : Modified insertNodeTableEntry() function in datalayer.py. In this function modified insert query to include <language>
+           column and it's default value as "und"
+====================================================================================================================
+Serial No : 16
+Version : 1.2.5
+Date : 23-09-2013
+Time : 3:55 PM
+Type : Issue faced by client
+Description : Client was facing issue in parsing url http://www.food.com/recipe/edesias-butternut-squash-pasta-sauce-373618. This issue was also previously 
+              occured due to ' character. 
+Solution : Added new variable Modified_variablename for recipe title in function insertNodeRevisionTableEntry(), insertNodeTableEntry
+           and insertRecipeTableEntry(). Used function MySQLdb.escape_string() for this solution.
+====================================================================================================================
+Serial No : 15
+Version : 1.2.4
+Date : Sept 19 2013
+Type : Issue faced by Client
+Description : The solution implemented for previous log entry was not working properly. Reason was the finding was case sensitive.
+              So made that solution working and from that solution got and idea that string.find must be case sensitive.
+Solution :    Kept checkForFormat() function as it is and using string.find() method I made source string and substring in lower 
+	      case and problem was solved. Now the older version is also running good.
+Time : 3:08
+=============================================================================================================
+Serial No : 14
+Version : 1.2.3
+Date : Sept 19 2013
+Type : Issue faced by Client
+Description : Client parsed url http://www.goodtoknow.co.uk/recipes/537410/butterscotch-banana-pudding and complained that
+              the urls is not being parsed.
+Solution : Examined script code and found that there was a problem in dataintegrator.py file in function grabData() in htmldata.find method call used to find instance of 
+           substring for each format type in htmldata string coming from getDataFromUrl() function. string.find() method was not working properly.
+	   So decided use BeautifulSoup parser to detect format keywords. Created function checkForFormat() in dataintegrator.py which uses BeautifulSoup library 
+           to find tag with particular format specifier.
+Time : 12:40
+=============================================================================================================
+Serial No : 13
+Version : 1.2.2
+Date : Sept 18 2013
+Type : Issue faced by Client
+Description : Client complained that directions are not parsed in some webpages. Actually the problem was that directions 
+              were not defined according to format specification. So client suggested that if directions are not parsed then 
+              create entry as "Click here to view preparation method" and make it a link to original recipe site. 
+Solution :  Modified insertPreparationTableEntry() function to include link parameter. Created another variable <prepStepList>
+            and assigned <preparationSteps> argument to that. If length of <preparationSteps> argument is 0 then text
+            suggested by client will be appended to new variable. Modified insertRecipe() function call to include <recipe.link> 
+            argument in insertPreparationTableEntry() function call.
+Time : 7:44	    	
+=============================================================================================================
+Serial No : 12
+Version : 1.2.1
+Date : Sept 18 2013
+Type : Functionality wanted by Client
+Description : Client wants to insert difficulty level for recipe which is actually not a part of format specification.
+              So he suggested that insert string 'Moderate' as default in <difficulty_level> column of recipe table
+Solution : Modified function insertRecipeTableEntry() to include <difficulty_level> column and modified insert query
+           according to that.
+Time : 6:53
+=============================================================================================================
+Serial No : 11
+Version : 1.2.0
+Date : Sept 18 2013
+Type : Issue faced by client
+Description : The last solution implemented for unique <vid> column problem was to count no of rows and put no + 1
+	      value in <vid> field. But found that the solution has some problem when some raws are deleted and after that
+              insertion is done. 
+Solution : Created getMaxVidFromNodeTable() function in datalayer.py and in that function fetched max value of <vid>
+	   column and returned it. Modified function insertNodeTableEntry() and called getMaxVidFromNodeTable() function.
+           Created a count variable which was set to 1 if return value of getMaxVidFromNodeTable() function is <None> otherwise
+           count = getMaxVidFromNodeTable() + 1 and supplied that value for <vid> column. Tested the solution on 
+	   http://paleomg.com whole domain successfully. 
+Time : 4:02 PM           
+=============================================================================================================
+Serial No : 10
+Version : 1.1.9
+Date : Sept 16 2013
+Type : Issue faced by client
+Description : Talked to client's developer. He told that in every table related to Data Parsing project nid is same.
+	      It is a value of primary key of <node> table. Even in recipe table where <nid> is a primary key, that column
+              has to be entered manually and will be a value of <nid> column from <node> table.
+Solution : => Modified insertPreparationTableEntry() function call in insertRecipe() function to change recipe_id to node_id.
+	   => Modified insertPreparationTableEntry(). Modified comment.
+	   => Modified insertRecipeIngredientsTableEntry() function call in insertRecipe() function to change recipe_id to
+              node_id
+           => Modified insertRecipeTableEntry() function call in insertRecipe() function to add <node_id> to parameter list.
+           => Modified insertRecipeTableEntry() function to include <nid> in argument list and insert query.
+
+
+==============================================================================================================
+Serial No : 9
+Version : 1.1.8
+Date : Sept 16 2013
+Type : Functionality wanted by Client
+Description : There must be nid value for records in node_revision table. nid is a primary key of <node> table
+	      and will come from that.
+Solution : Modified insertNodeRevisionTableEntry() function in datalayer.py file to include node_id parameter in argument.
+	   In that function modified insert query also to include node_id (nid). Changed function insertRecipe() in 
+	   datalayer.py file. Changed the sequence of calls insertNodeTableEntry() function and insertNodeRevisionTableEntry()
+           in that function.
+Time : 3:40 PM
+==============================================================================================================
+Serial No : 8
+Version : 1.1.7
+Date : Sept 13 2013
+Type : Functionality wanted by client
+Description : Client wants to extract minutes from ISO8601 format data. Hour should also be calculated if present.
+Solution : If hour is present convert it to minutes. (It's not told my client but my own logic). Add minutes in total minutes according to hour value.
+	   (60 minutes for each hour).Modified function extractMinuteFromISOFormat() in datalayer.py to calculate hour value if present and add 
+	   minutes according to it(60 minutes for each hour)
+Time : 6:15 PM      	
+==============================================================================================================
+Serial No : 7
+Version : 1.1.6
+Date : Sept 12 2013
+Type : Functionality wanted by client
+Description : Client wants that each recipe must has it's domain name as it's uid. So he wants that for each domain 
+	      he wants to pass, he will create a new user in Drupal. Then in current directory of script he will create 
+	      a mapping file ie. maps.txt which contain mapping of domainname and uid in format as domain,uid which 
+ 	      script can read at execution time and from this file it can get uid for particular domain and save it in 
+	      related recipe entries.
+Solution : As per client requirement a file called maps.txt will be there with required format. This file name will be 
+	   defined in settings.py so it can be configured. Script will read that file and get uid for any domain. If 
+	   domainname is not defined in mapping file then script will check for entry called <default.com> and get uid
+           of it. 
+           => Written a function getMappingData() in dataintegrator.py to read mapping file. 
+           => Modified constructor of DataManager class in datalayer.py to include mappingdict parameter
+           => Called getMappingData() function from __main__ entry point
+	   => Modified grabDataFromSingleUrl() function to include <mappingdict> parameter and pass it to DataManager 
+	      instance
+           => Modified main() function to include parameter <mappingdict> and pass it to DataManager instance.
+	   => Modified insertNodeTableEntry() function in datalayer.py to get corresponding <uid> from <mappingdict>
+	      dictionary and supply it to <uid> column of node table
+	   => Modified insertNodeTableEntry() function in datalayer.py to include parameter <link>.
+	   => Pasred link to <urlparse> and got net location from that link and supplied uid corresponding to that 
+	      link to insert query.	
+
+Time : 4:46 PM      	
+==============================================================================================================
+Serial No : 6
+Version : 1.0.6
+Date : Sept 12 2013
+Type : Issue faced by client
+Description : Each recipe must have an author. So there was a need to enter uid (Owner ID) in <node> table in database.
+	      So for now each recipe has <uid> as 1 which is administrator.
+Solution : Modified function insertNodeTableEntry() function to enter a default value of 1 to uid column of <node> table.	   
+Time : 3:45 PM
+==============================================================================================================
+Serial No : 5
+Version : 1.0.5
+Date : Sept 12 2013
+Type : Issue faced by client
+Description : For each recipe to be displayed in drupal, each entry in <node> table should contain value "recipe" 
+	      in it's <type> column.
+Solution : Simply inserted "recipe" as a static value in <type> column in noe table. For that modified function 
+	   insertNodeTableEntry() in datalayer.py
+Time : 2:25 PM
+==============================================================================================================
+Serial No : 4
+Version : 1.0.4
+Date : Sept 12 2013
+Type : Issue faced by client
+Description : The description coming from a gven url contained special characters like quotes etc.
+Solution : Written function escape() in /datalayer.py to replace special characters with html entities 
+Time : 11:57 AM
+==============================================================================================================
+Serial No : 3
+Version : 1.0.3
+Date : Sept 10 2013
+Type : Issue faced by client
+Description : The prepTime and cookTime information coming from url was in ISO 8601 format and was string (Ex. PT10M) 
+	while client database columns for both of these information were in integer format. So these information were not 
+	added to new record due to type mismatch.
+Solution : Written a function extractMinuteFromISOFormat() in /datalayer.py to extract minutes from an prepTime and cookTime
+	   in ISO8601 format.
+Time : Unknown
+==============================================================================================================
+Serial No : 2
+Version : 1.0.2
+Date : Sept 9 2013
+Type : Functionality wanted by client
+Description : In a previously implemented functionality client could supply a single individual url from command line.
+	      Now he wants to enter multiple individual single url.
+Solution : Instead of getting individual url as command line input script will take a filename containing multiple 
+	   individual url where each url must be in new line. Script will read that file, fetch urls one by one 
+	   and extract get data from it. File reading and other related functionalities are implemented in __main__ 
+	   entry point. Used previously created grabDataFromSingleUrl() function.
+Time : Unknown
+==============================================================================================================
+Serial No : 1
+Version : 1.0.1
+Date : Sept 9 2013
+Type : Functionality wanted by client
+Description : Client wanted to supply a single url to test instead of whole domain to be harvested.
+Solution : In dataintegrator.py in __main __ entry point checked for commandline url input and written a function
+	   grabDataFromSingleUrl() to extract data from a single url.
+Time : Unknown
+==============================================================================================================
