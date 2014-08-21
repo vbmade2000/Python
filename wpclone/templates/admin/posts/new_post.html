@@ -1,0 +1,416 @@
+{% extends 'admin/users/admin_base.html' %}
+{% block css_theme_styles %}
+<!-- BEGIN THEME STYLES -->
+<link href="{{ STATIC_URL }}admin/css/style-metronic.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}admin/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}admin/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}admin/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}admin/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="{{ STATIC_URL }}admin/css/custom.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}admin/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" type="text/css"/>
+
+    <!-- END THEME STYLES -->
+{% endblock %}
+{% block content_body %}
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <div class="page-content"> 
+    <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+    <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title">Modal title</h4>
+          </div>
+          <div class="modal-body"> Widget settings form goes here </div>
+          <div class="modal-footer">
+            <button type="button" class="btn blue">Save changes</button>
+            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        <!-- /.modal-content --> 
+      </div>
+      <!-- /.modal-dialog --> 
+    </div>
+    <!-- /.modal --> 
+    <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM--> 
+    <!-- BEGIN STYLE CUSTOMIZER -->
+    <div class="theme-panel hidden-xs hidden-sm">
+      <div class="toggler"> </div>
+      <div class="toggler-close"> </div>
+      <div class="theme-options">
+        <div class="theme-option theme-colors clearfix"> <span> THEME COLOR </span>
+          <ul>
+            <li class="color-black current color-default" data-style="default"> </li>
+            <li class="color-blue" data-style="blue"> </li>
+            <li class="color-brown" data-style="brown"> </li>
+            <li class="color-purple" data-style="purple"> </li>
+            <li class="color-grey" data-style="grey"> </li>
+            <li class="color-white color-light" data-style="light"> </li>
+          </ul>
+        </div>
+        <div class="theme-option"> <span> Layout </span>
+          <select class="layout-option form-control input-small">
+            <option value="fluid" selected="selected">Fluid</option>
+            <option value="boxed">Boxed</option>
+          </select>
+        </div>
+        <div class="theme-option"> <span> Header </span>
+          <select class="header-option form-control input-small">
+            <option value="fixed" selected="selected">Fixed</option>
+            <option value="default">Default</option>
+          </select>
+        </div>
+        <div class="theme-option"> <span> Sidebar </span>
+          <select class="sidebar-option form-control input-small">
+            <option value="fixed">Fixed</option>
+            <option value="default" selected="selected">Default</option>
+          </select>
+        </div>
+        <div class="theme-option"> <span> Sidebar Position </span>
+          <select class="sidebar-pos-option form-control input-small">
+            <option value="left" selected="selected">Left</option>
+            <option value="right">Right</option>
+          </select>
+        </div>
+        <div class="theme-option"> <span> Footer </span>
+          <select class="footer-option form-control input-small">
+            <option value="fixed">Fixed</option>
+            <option value="default" selected="selected">Default</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- END STYLE CUSTOMIZER --> 
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+      <div class="col-md-12">
+
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <h3 class="page-title"> Add New Post</h3>
+          <div class="note note-success error">
+               Error in adding new post.
+          </div>
+            <!--This is the success block -->
+          <div class="note note-success success">
+                Post added successfully.
+          </div>
+
+        <!-- END PAGE TITLE & BREADCRUMB--> 
+      </div>
+    </div>
+    <!-- END PAGE HEADER--> 
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+
+      <div class="col-md-8">
+          <p>
+              <input type="text" id="title" name="post_title" class="form-control input-lg" placeholder="Enter title here" >
+          </p><br><br>
+
+          <button class="btn-default" id="insert_media_button" name="insert_media_button" value="Add Media"/>
+                <i class="fa fa-music"></i> Add Media
+          </button><br><br>
+
+          <div class="portlet box blue tabbable">
+						<div class="portlet-title">
+                            <div class="caption" style="height:17px">
+								<i class="fa fa-reorder"></i>
+							</div>
+						</div>
+						<div class="portlet-body">
+							<div class=" portlet-tabs">
+								<ul class="nav nav-tabs">
+									<li class="">
+										<a href="#portlet_tab3" data-toggle="tab">
+											 Text
+										</a>
+									</li>
+									<li class="active">
+										<a href="#portlet_tab2" data-toggle="tab">
+											 Visual
+										</a>
+									</li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane active" id="portlet_tab2">
+										<div class="tab-content">
+                                              <div id="portlet_tab1" class="tab-pane active">
+                                                <textarea class="ckeditor" id="wp_editor" name="wp_editor" cols="80" id="editor4" rows="10" tabindex="1"></textarea>
+                                              </div>
+                                        </div>
+									</div>
+									<div class="tab-pane" id="portlet_tab3">
+                                        <div id="portlet_tab1" class="tab-pane active">
+                                                <textarea class="ckeditor" id="post_content" name="post_content" cols="80" id="editor4" rows="10" tabindex="1"></textarea>
+                                        </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+        <!-- END GENERAL PORTLET--> 
+        
+        <!-- BEGIN WELLS PORTLET--> 
+        
+        <!-- END WELLS PORTLET--> 
+      </div>
+      <div class="col-md-4"> 
+        <!-- BEGIN UNORDERED LISTS PORTLET-->
+        <div class="portlet box red">
+          <div class="portlet-title">
+            <div class="caption"> <i class="fa fa-reorder"></i>Publish</div>
+            <div class="tools"> <a href="javascript:;" class="collapse"> </a> </div>
+          </div>
+          <div class="portlet-body">
+            <button class="btn-default" type="button" id="save-post" name="save">Save Draft</button>
+            <button class="btn-default" type="button" id="post-preview" name="post-preview">Preview</button><br><br>
+
+{#            Ststus part  #}
+            <i class="fa fa-thumb-tack"></i> Status: <b class="post-status-display">Draft</b>
+            <a href="#" class="edit-post-status">Edit</a> <br>
+            <div class="post-status-select">
+                <select id="post_status" name="post_status">
+                    <option value="publish">published</option>
+                    <option value="Pending Review">Pending Review</option>
+                    <option value="Draft">Draft</option>
+                </select>
+                <button class="btn-default save-post-status" type="button" id="" name="save-post-status">Ok</button>
+                <a href="#" class="cancel-post-status">Cancel</a><br><br>
+            </div>
+
+{#         Visibility part     #}
+            <span class="glyphicon glyphicon-eye-open"></span> Visibility:<b class="post-visibility-display">Public</b> <a href="#" class="edit-visibility">Edit</a><br>
+            <div id="post-visibility-select">
+                <input type="radio" id="visibility-radio-public" name="visibility" value="Public" class="make-switch switch-radio1"/>&nbsp; Public<br>
+                    <input type="checkbox" id="" name="">Stick this post to the front page<br>
+                <input type="radio" id="visibility-radio-password" name="visibility" value="Password Protected" class="make-switch switch-radio1"/>&nbsp; Password Protected<br>
+                    Password:<br>
+                    <input type="password" id="" name=""/><br>
+                <input type="radio" id="visibility-radio-private" name="visibility" value="Private" class="make-switch switch-radio1"/>&nbsp; Private<br>
+
+                <input type="button" id="save-post-visibility" name="save-post-visibility" value="Ok"/>&nbsp;&nbsp;&nbsp;
+                <a href="#" class="cancel-post-visibility">Cancel</a>
+            </div>
+
+{#         publish immediately part     #}
+            <i class="fa fa-calendar"></i> Publish <b>immediately</b><a href="#" class="edit-timestamp">Edit</a><br>
+
+                <select name="" id="">
+                    <option value="" {% if current_date|date:"F" == 'January' %}selected{% endif %}>01-Jan</option>
+                    <option value="" {% if current_date|date:"F" == 'February' %}selected{% endif %}>02-Feb</option>
+                    <option value="" {% if current_date|date:"F" == 'March' %}selected{% endif %}>03-March</option>
+                    <option value="" {% if current_date|date:"F" == 'April' %}selected{% endif %}>04-April</option>
+                    <option value="" {% if current_date|date:"F" == 'May' %}selected{% endif %}>05-May</option>
+                    <option value="" {% if current_date|date:"F" == 'June' %}selected{% endif %}>06-June</option>
+                    <option value="" {% if current_date|date:"F" == 'July' %}selected{% endif %}>07-July</option>
+                    <option value="" {% if current_date|date:"F" == 'August' %}selected{% endif %}>08-Aug</option>
+                    <option value="" {% if current_date|date:"F" == 'September' %}selected{% endif %}>09-Sept</option>
+                    <option value="" {% if current_date|date:"F" == 'October' %}selected{% endif %}>10-Oct</option>
+                    <option value="" {% if current_date|date:"F" == 'November' %}selected{% endif %}>11-Nov</option>
+                    <option value="" {% if current_date|date:"F" == 'December' %}selected{% endif %}>12-Dec</option>
+                </select>
+                    <input type="text" name="" id="" value="{% now 'd' %}"/>
+              <br><br>
+
+              <label style="color:red">Move to Trash</label>  <input type="button" id="publish" name="publish" class="btn btn-info" value="Publish"/>
+          </div>
+        </div>
+        </div>
+                <!-- END DESCRIPTION LISTS PORTLET-->
+
+      <div class="col-md-4">
+        <!-- BEGIN UNORDERED LISTS PORTLET-->
+        <div class="portlet box red">
+          <div class="portlet-title">
+            <div class="caption"> <i class="fa fa-reorder"></i>Format</div>
+            <div class="tools"> <a href="javascript:;" class="collapse"> </a> </div>
+          </div>
+          <div class="portlet-body">
+              <input type="radio" name="radio1" class="make-switch switch-radio1"/>
+              &nbsp;<span class="glyphicon glyphicon-pushpin"></span>&nbsp;Standard<br>
+              <input type="radio" name="radio1" class="make-switch switch-radio1"/>
+              &nbsp;<i class="fa fa-file-text-o"></i>&nbsp;Aside<br>
+              <input type="radio" name="radio1" class="make-switch switch-radio1"/>
+              &nbsp;<span class="glyphicon glyphicon-picture"></span>&nbsp;Image<br>
+              <input type="radio" name="radio1" class="make-switch switch-radio1"/>
+              &nbsp;<i class="fa fa-caret-square-o-right"></i>&nbsp;Video<br>
+              <input type="radio" name="radio1" class="make-switch switch-radio1"/>
+              &nbsp;<i class="fa fa-music"></i>&nbsp;Audio<br>
+              <input type="radio" name="radio1" class="make-switch switch-radio1"/>
+              &nbsp;<i class="fa fa-quote-left"></i>&nbsp;Quote<br>
+              <input type="radio" name="radio1" class="make-switch switch-radio1"/>
+              &nbsp;<i class="fa fa-link"></i>&nbsp;Link<br>
+              <input type="radio" name="radio1" class="make-switch switch-radio1"/>
+              &nbsp;<i class="glyphicon glyphicon-picture"></i>&nbsp;Gallery<br>
+          </div>
+        </div>
+
+        <!-- END DESCRIPTION LISTS PORTLET-->
+      </div>
+
+      <div class="col-md-4">
+					<div class="portlet box red">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-reorder"></i>Categories
+							</div>
+							<div class="tools">
+								<a href="javascript:;" class="collapse">
+								</a>
+								<a href="#portlet-config" data-toggle="modal" class="config">
+								</a>
+							</div>
+						</div>
+						<div class="portlet-body">
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a href="#tab_1_1" data-toggle="tab">
+										 All Categories
+									</a>
+								</li>
+								<li>
+									<a href="#tab_1_2" data-toggle="tab">
+										 Most Used
+									</a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane fade active in" id="tab_1_1">
+									<p>
+										 category list
+									</p>
+								</div>
+								<div class="tab-pane fade" id="tab_1_2">
+									<p>
+										 category list
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT--> 
+  </div>
+  <!-- BEGIN CONTENT --> 
+</div>
+{% endblock content_body %}
+{% block js_page_level_scripts %}
+<!-- BEGIN PAGE LEVEL SCRIPTS --> 
+<script src="{{ STATIC_URL }}admin/js/core/app.js"></script>
+<script src="{{ STATIC_URL }}scripts/ckeditor.js"></script>
+{#<script src="{{ STATIC_URL }}scripts/config.js"></script>#}
+
+    <!-- END PAGE LEVEL SCRIPTS -->
+{% endblock js_page_level_scripts %}
+{% block javascript %}
+<script>
+jQuery(document).ready(function() {       
+   // initiate layout and plugins
+   App.init();
+
+    $('.post-status-select').hide();
+    $('#post-visibility-select').hide();
+
+    $("#publish").click(function(){
+        var post_content_html = CKEDITOR.instances.wp_editor.getData();
+        var post_title_text = $("#title").val();
+        var page_data = {
+                     'post_content_html': post_content_html,
+                     'post_title_text': post_title_text,
+                      'csrfmiddlewaretoken': '{{ csrf_token }}'
+                   }
+        $.ajax({
+              url: "{% url 'create_post' %}",
+              dataType: 'text',
+              type: 'POST',
+              data: page_data,
+              success: function(data){
+                  if(data == 0){
+                      $(".success").show();
+                      $('html, body').animate({
+                                    scrollTop: $(".success").offset().top - 100
+                      }, 1000);
+                  }
+                  else {
+                      $(".error").show();
+                  }
+              },
+              error: function(){
+                  $(".error").show();
+              }
+        });
+
+    });
+
+{#    jquery for status#}
+    $('.save-post-status').click(function(){
+        value = $('#post_status').val();
+        $('.post-status-display').html(value);
+
+    });
+    $('.cancel-post-status').on('click',function(){
+        $('.post-status-select').hide();
+        $(this).hide();
+        $('.edit-post-status').show();
+    });
+    $('.edit-post-status').on('click',function(){
+        $('.post-status-select').show();
+        $(this).hide();
+        $('.cancel-post-status').show();
+    });
+
+{#    jquery for visibility#}
+    $('#save-post-visibility').click(function(){
+        value = $('input[name=visibility]:checked').val();
+        $('.post-visibility-display').html(value);
+
+    });
+    $('.edit-visibility').click(function(){
+        $('#post-visibility-select').show();
+        $(this).hide();
+        $('.cancel-post-visibility').show();
+    });
+
+    $('.cancel-post-visibility').click(function(){
+        $('#post-visibility-select').hide();
+        $(this).hide();
+        $('.edit-visibility').show();
+    });
+
+});
+	</script> 
+<!-- editor--> 
+<!-- BEGIN JAVASCRIPTS -->
+<script>
+		CKEDITOR.on('instanceReady', function( evt ) {
+			var editor = evt.editor;
+			editor.setData( 'This editor has it\'s tabIndex set to <strong>' + editor.tabIndex + '</strong>' );
+
+			// Apply focus class name.
+			editor.on( 'focus', function() {
+				editor.container.addClass( 'cke_focused' );
+			});
+			editor.on( 'blur', function() {
+				editor.container.removeClass( 'cke_focused' );
+			});
+
+			// Put startup focus on the first editor in tab order.
+			if ( editor.tabIndex == 1 )
+				editor.focus();
+
+
+		});
+
+	</script> 
+
+<!-- END JAVASCRIPTS -->
+{% endblock javascript %}

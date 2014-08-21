@@ -1,0 +1,277 @@
+{% extends 'admin/users/admin_base.html' %}
+
+{% block css_page_level_plugin_styles %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/plugins/select2/select2.css"
+          xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"/>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/plugins/select2/select2-metronic.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}admin/plugins/data-tables/DT_bootstrap.css"/>
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+{% block css_theme_styles %}
+    <!-- BEGIN THEME STYLES -->
+    <link href="{{ STATIC_URL }}admin/css/style-metronic.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ STATIC_URL }}admin/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ STATIC_URL }}admin/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ STATIC_URL }}admin/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ STATIC_URL }}admin/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+    <link href="{{ STATIC_URL }}admin/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" type="text/css"/>
+    <!-- END THEME STYLES -->
+{% endblock %}
+{% block content_body %}
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <!-- BEGIN STYLE CUSTOMIZER -->
+            <div class="theme-panel hidden-xs hidden-sm">
+                <div class="toggler">
+                </div>
+                <div class="toggler-close">
+                </div>
+                <div class="theme-options">
+                    <div class="theme-option theme-colors clearfix">
+						<span>
+							 THEME COLOR
+						</span>
+                        <ul>
+                            <li class="color-black current color-default" data-style="default">
+                            </li>
+                            <li class="color-blue" data-style="blue">
+                            </li>
+                            <li class="color-brown" data-style="brown">
+                            </li>
+                            <li class="color-purple" data-style="purple">
+                            </li>
+                            <li class="color-grey" data-style="grey">
+                            </li>
+                            <li class="color-white color-light" data-style="light">
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="theme-option">
+						<span>
+							 Layout
+						</span>
+                        <select class="layout-option form-control input-small">
+                            <option value="fluid" selected="selected">Fluid</option>
+                            <option value="boxed">Boxed</option>
+                        </select>
+                    </div>
+                    <div class="theme-option">
+						<span>
+							 Header
+						</span>
+                        <select class="header-option form-control input-small">
+                            <option value="fixed" selected="selected">Fixed</option>
+                            <option value="default">Default</option>
+                        </select>
+                    </div>
+                    <div class="theme-option">
+						<span>
+							 Sidebar
+						</span>
+                        <select class="sidebar-option form-control input-small">
+                            <option value="fixed">Fixed</option>
+                            <option value="default" selected="selected">Default</option>
+                        </select>
+                    </div>
+                    <div class="theme-option">
+						<span>
+							 Sidebar Position
+						</span>
+                        <select class="sidebar-pos-option form-control input-small">
+                            <option value="left" selected="selected">Left</option>
+                            <option value="right">Right</option>
+                        </select>
+                    </div>
+                    <div class="theme-option">
+						<span>
+							 Footer
+						</span>
+                        <select class="footer-option form-control input-small">
+                            <option value="fixed">Fixed</option>
+                            <option value="default" selected="selected">Default</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- END STYLE CUSTOMIZER -->
+            <!-- BEGIN PAGE HEADER-->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                    <h3 class="page-title">
+                        Edit Tags &nbsp;
+                    </h3>
+
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+                </div>
+
+            </div>
+            <!--Error block-->
+            <div class="note note-success error">
+
+            </div>
+            <!--Success block-->
+            <div class="note note-success success">
+
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row col-md-12">
+            <form action="" method="post">{% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 margin-bottom-10">
+                            <label class="control-label" for="title"><b>Name</b></label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-5 col-xs-12 margin-bottom-10">
+                            <input id="tag_name" name="tag_name" type="text" class="form-control" value="{{ tag_name }}"/>
+                            <label>The name is how it appears on your site.</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 margin-bottom-10">
+                            <label class="control-label" for="title"><b>Slug</b></label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-5 col-xs-12 margin-bottom-10">
+                            <input id="tag_slug" name="tag_slug" type="text" class="form-control" value="{{ tag_slug }}"/>
+                            <label>The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.</label>
+                        </div>
+                    </div>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 margin-bottom-10">
+                        <label class="control-label" for="title"><b>Description</b></label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-5 col-xs-12 margin-bottom-10">
+                        <textarea id="tag_description" name="tag_description" class="form-control" rows="2" >{{ tag_description }}</textarea>
+                        <label class="">The description is not prominent by default; however, some themes may show it.</label>
+                    </div>
+                </div>
+
+                    <div>
+                        <button type="button" class="btn btn-info" value="update_category" id="btnaddupdatetag" name="btnaddupdatetag"/>Update</button>
+                    </div>
+            </form>
+                <!-- END EXAMPLE TABLE PORTLET-->
+            </div>
+        </div>
+        <!-- END CONTENT -->
+    </div>
+{% endblock %}
+{% block js_page_level_plugins %}
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script type="text/javascript" src="{{ STATIC_URL }}admin/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}admin/plugins/data-tables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}admin/plugins/data-tables/DT_bootstrap.js"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+{% endblock %}
+{% block js_page_level_scripts %}
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="{{ STATIC_URL }}admin/js/core/app.js"></script>
+    <script src="{{ STATIC_URL }}admin/js/custom/table-managed-categories.js"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+{% endblock %}
+{% block javascript %}
+    <script>
+        jQuery(document).ready(function() {
+            App.init();
+            TableManaged.init();
+        });
+    </script>
+    <script>
+        $('#btnaddupdatetag').click(function () {
+        var data = JSON.stringify($('form').serializeObject());
+        $(".error").empty();
+        var parsedData = JSON.parse(data);
+        var status = true;
+        if ( !parsedData.tag_name){
+            window.location="{% url "create_tags" %}" + "?status=tag_update_failed";
+            status = false;
+        }
+
+        if ( status == true){
+            $(".error").hide();
+            $.ajax( {
+                type: "POST",
+                dataType: "JSON",
+                url: "{% url "update_tag" tag_id %}",
+                data:{tags_details:data},
+                success: function(result) {
+                    if (result){
+                        var error_code_length = result.error_codes.length;
+                        var error_code_count = 0;
+                        if (error_code_length == 0){
+                            /* Everything is successful */
+                            window.location.replace("{% url "create_tags" %}" + "?status=tag_update_success");
+                        }
+                        else{
+                            /* We have got problems */
+                            $(".error").empty();
+                            $(".note-success").hide();
+                            for(error_code_count=0; error_code_count<error_code_length; error_code_count++){
+                                var error_code = result.error_codes[error_code_count];
+                                if ( error_code == 1){
+                                    $(".error").append("Please enter a name.</br>").show();
+                                }
+                                if ( error_code == 2){
+                                    $(".error").append("Slug field is alredy exits.</br>").show();
+                                }
+                                if ( error_code == 3){
+                                    $(".error").append("Error in update tags</br>").show();
+                                }
+                            }
+
+                        }
+                    }
+                },
+                error: function(result) {
+                    $(".error").append("Unknown Error").show();
+                }
+            });
+        }
+    });
+    </script>
+    <script>
+        $.fn.serializeObject = function()
+        {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function() {
+                if (o[this.name] !== undefined) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }   
+            });
+            return o;
+        };
+    </script>
+
+{% endblock %}

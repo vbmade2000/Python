@@ -1,0 +1,358 @@
+{% extends 'admin/users/admin_base.html' %}
+
+{% block css_page_level_plugin_styles %}
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/plugins/select2/select2.css"/>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/plugins/select2/select2-metronic.css"/>
+<link rel="stylesheet" href="{{ STATIC_URL }}admin/plugins/data-tables/DT_bootstrap.css"/>
+<!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+{% block css_theme_styles %}
+<!-- BEGIN THEME STYLES -->
+<link href="{{ STATIC_URL }}admin/css/style-metronic.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}admin/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}admin/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}admin/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}admin/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="{{ STATIC_URL }}admin/css/custom.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" type="text/css"/>
+<!-- END THEME STYLES -->
+{% endblock %}
+{% block content_body %}
+	<!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+		<div class="page-content">
+			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">Modal title</h4>
+						</div>
+						<div class="modal-body">
+							 Widget settings form goes here
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn blue">Save changes</button>
+							<button type="button" class="btn default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<!-- BEGIN STYLE CUSTOMIZER -->
+			<div class="theme-panel hidden-xs hidden-sm">
+				<div class="toggler">
+				</div>
+				<div class="toggler-close">
+				</div>
+				<div class="theme-options">
+					<div class="theme-option theme-colors clearfix">
+						<span>
+							 THEME COLOR
+						</span>
+						<ul>
+							<li class="color-black current color-default" data-style="default">
+							</li>
+							<li class="color-blue" data-style="blue">
+							</li>
+							<li class="color-brown" data-style="brown">
+							</li>
+							<li class="color-purple" data-style="purple">
+							</li>
+							<li class="color-grey" data-style="grey">
+							</li>
+							<li class="color-white color-light" data-style="light">
+							</li>
+						</ul>
+					</div>
+					<div class="theme-option">
+						<span>
+							 Layout
+						</span>
+						<select class="layout-option form-control input-small">
+							<option value="fluid" selected="selected">Fluid</option>
+							<option value="boxed">Boxed</option>
+						</select>
+					</div>
+					<div class="theme-option">
+						<span>
+							 Header
+						</span>
+						<select class="header-option form-control input-small">
+							<option value="fixed" selected="selected">Fixed</option>
+							<option value="default">Default</option>
+						</select>
+					</div>
+					<div class="theme-option">
+						<span>
+							 Sidebar
+						</span>
+						<select class="sidebar-option form-control input-small">
+							<option value="fixed">Fixed</option>
+							<option value="default" selected="selected">Default</option>
+						</select>
+					</div>
+					<div class="theme-option">
+						<span>
+							 Sidebar Position
+						</span>
+						<select class="sidebar-pos-option form-control input-small">
+							<option value="left" selected="selected">Left</option>
+							<option value="right">Right</option>
+						</select>
+					</div>
+					<div class="theme-option">
+						<span>
+							 Footer
+						</span>
+						<select class="footer-option form-control input-small">
+							<option value="fixed">Fixed</option>
+							<option value="default" selected="selected">Default</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<!-- END STYLE CUSTOMIZER -->
+			<!-- BEGIN PAGE HEADER-->
+			<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+					<h3 class="page-title">
+                        Users &nbsp;
+                        <div class="btn-group">
+									<a href="{% url "create_user" %}" id="sample_editable_1_new" class="btn green">
+									Add New <i class="fa fa-plus"></i>
+									</a>
+					    </div>
+					</h3>
+
+					<!-- END PAGE TITLE & BREADCRUMB-->
+				</div>
+
+			</div>
+            <!--Error block-->
+            <div class="note note-success error">
+
+            </div>
+
+           <!--Success block-->
+            <div class="note note-success success">
+                Profile updated.
+            </div>
+			<!-- END PAGE HEADER-->
+			<!-- BEGIN PAGE CONTENT-->
+			<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN EXAMPLE TABLE PORTLET-->
+					<div class="portlet box light-grey" style="border:none !important">
+						<div class="portlet-body">
+                            All(1) | <a href="#">Administrator(1)</a><br>
+
+                            <!--this is the dropdown from metronic-->
+
+                            <select class="" style="height:35px;" id="select_top">
+                                <option>Bulk Actions</option>
+                                <option>Delete</option>
+                            </select> &nbsp;
+                            <input type="button" class="btn btn-default" value="Apply" onclick="action('select_top')"/>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <select style="height:35px;" id="role" name="role">
+                                {% for role in roles %}
+                                    <option value="{{ role.id }}">{{ role.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="button" class="btn btn-default" value="Change" id="btnChangeRole" name="btnChangeRole"/>
+
+                        </div>
+							<table class="table table-striped table-bordered table-hover" id="sample_1">
+							<thead>
+							<tr>
+								<th class="table-checkbox">
+									<input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes"/>
+								</th>
+								<th>
+									 Username
+								</th>
+								<th>
+									 Name
+								</th>
+								<th>
+									 E-mail
+								</th>
+								<th>
+									 Date Joined
+								</th>
+								<th>
+									 Role
+								</th>
+							</tr>
+							</thead>
+							<tbody>
+                            {% for profile in user_set %}
+							<tr class="odd gradeX">
+                                <td>
+									<input type="checkbox" id="{{ profile.id }}" class="checkboxes" name="chk" value="1"/>
+								</td>
+								<td>
+									 {{ profile.username }}<a href="{% url 'update_user' profile.id %}" class="edit-left">  Edit</a>
+								</td>
+								<td>
+                                        {{ profile.first_name }}  {{ profile.last_name }}
+								</td>
+								<td>
+                                    <a href="mailto:{{ profile.email }}">
+                                        {{ profile.email }}
+                                    </a>
+
+								</td>
+								<td class="center">
+                                    {{ profile.date_joined }}
+								</td>
+								<td>
+                                    {{ profile.wpuser_set.all.0.role.name }}
+								</td>
+							</tr>
+                            {% endfor %}
+							</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- END EXAMPLE TABLE PORTLET-->
+				</div>
+                            <select class="" style="height:35px;" id="select_bottom">
+                                <option>Bulk Actions</option>
+                                <option>Delete</option>
+
+                            </select> &nbsp;
+                            <input type="button" class="btn btn-default" value="Apply" onclick="action('select_bottom')"/>
+			</div>
+	<!-- END CONTENT -->
+    </div>
+    {% endblock %}
+{% block js_page_level_plugins %}
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script type="text/javascript" src="{{ STATIC_URL }}admin/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/plugins/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/plugins/data-tables/DT_bootstrap.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+{% endblock %}
+{% block js_page_level_scripts %}
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="{{ STATIC_URL }}admin/js/core/app.js"></script>
+<script src="{{ STATIC_URL }}admin/js/custom/table-managed.js"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+{% endblock %}
+{% block javascript %}
+<script>
+jQuery(document).ready(function() {       
+   App.init();
+   TableManaged.init();
+   $("#btnChangeRole").click(function(){
+       /* Function to change roles of selected users */
+       var selected_role = $("#role").val();
+       /* Get IDs of all selected Checkboxes*/
+       var list_change = new Array(); // Array to hold ids of selected checkboxes
+       $('input[name=chk]:checked').each(function()
+       {
+                var id = $(this).attr('id');
+                list_change.push(id);
+       });
+       $.ajax({
+                type: 'POST',
+                dataType: "json",
+                url: "{%  url 'change_user_role' %}",
+                data:{list_change: list_change, role_id: selected_role},
+                success: function (data) {
+                    if(data==1)
+                    {
+                        data = eval(data);
+                        window.location = "{% url "all_user" %}";
+                    }
+                    else
+                    {
+                        alert('Error in changing role');
+                    }
+                },
+                error: function (data) {
+                    alert("Error in deleting selected record")
+                }
+            }); // End of ajax call
+       }); // End of btnChangeRole.click()
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+            return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        var update_param = getParameterByName("update");
+        var delete_count = getParameterByName("delete_count");
+        if(update_param == "del"){
+            if(delete_count > 1) {
+                $(".success").html(delete_count + " users deleted.").show();
+            }
+            else{
+                $(".success").html("User deleted.").show();
+            }
+
+        }
+
+});
+    function action(e){
+{#        alert(e);#}
+        var list_delete = new Array();
+        var event = $('#'+e).val();
+        if ( event == 'Delete'){
+            $('input[name=chk]:checked').each(function()
+            {
+                var id = $(this).attr('id');
+                list_delete.push(id);
+{#              call ajax method here#}
+            });
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                url: "{%  url 'delete_user' %}",
+                data:{list_delete:list_delete},
+                success: function (data) {
+                    if(data==1)
+                    {
+                        data = eval(data);
+                        window.location="{% url "all_user" %}" + "?update=del";
+                        alert('Record is deleted successfully');
+                    }
+                    else
+                    {
+                        alert('Error ' + data);
+                        alert('Record can not be deleted because of associations');
+                    }
+                },
+                error: function (data) {
+                    alert("Error in deleting selected record")
+                }
+
+            }); // End of ajax call
+
+        }
+
+        if ( event == 'Bulk Actions'){
+            $('input[name=chk]:checked').each(function()
+            {
+                var id = $(this).attr('id');
+                list_delete.push(id);
+{#              call ajax method here#}
+
+            });
+
+        }
+
+     }
+</script>
+{% endblock %}

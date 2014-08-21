@@ -1,0 +1,406 @@
+{% extends 'admin/users/admin_base.html' %}
+{% block css_theme_styles %}
+    <!-- BEGIN THEME STYLES -->
+    <link href="{{ STATIC_URL }}admin/css/style-metronic.css" rel="stylesheet" type="text/css"
+          xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"/>
+    <link href="{{ STATIC_URL }}admin/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ STATIC_URL }}admin/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ STATIC_URL }}admin/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ STATIC_URL }}admin/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+    <link href="{{ STATIC_URL }}admin/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" type="text/css"/>
+    <!-- END THEME STYLES -->
+{% endblock %}
+{% block content_body %}
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+
+            <!-- BEGIN PAGE HEADER-->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                    <h3 class="page-title">Discussion Settings &nbsp;</h3>
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+                </div>
+            </div>
+
+            <!-- BEGIN PAGE CONTENT-->
+            <!--This is the error block -->
+            <div class="note note-success error">
+
+            </div>
+            <!--This is the success block -->
+            <div class="note note-success success">
+                success message
+            </div>
+
+
+            <form method="post" id="reading_form" action="">{% csrf_token %}
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 margin-bottom-10">
+                        <label class="control-label" for="title"><b>Default article settings</b></label>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-5 col-xs-12 margin-bottom-10">
+                        <label>
+                            <input type="checkbox" id="default_pingback_flag" name="default_pingback_flag" {% if default_pingback_flag == 'on' %}checked{% endif %}>
+                            Attempt to notify any blogs linked to from the articles<br><br>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="default_ping_status" name="default_ping_status" {% if default_ping_status == 'on' %}checked{% endif %}/>
+                            Allow link notifications from other blogs(pingbacks and trackbacks)<br><br>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="default_comment_status" name="default_comment_status" {% if default_comment_status == 'on' %}checked{% endif %}/>
+                            Allow people to post comments on new articles<br><br>
+                            (These settings may be overridden for individual articles.)
+                        </label>
+                    </div>
+                </div><br><br>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 margin-bottom-10">
+                        <label class="control-label" for="title"><b>Other comment settings</b></label>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-5 col-xs-12 margin-bottom-10">
+                        <label>
+                            <input type="checkbox" id="require_name_email" name="require_name_email" {% if require_name_email == 'on' %}checked{% endif %}>
+                            Comment author must fill out name and e-mail<br><br>
+                        </label><br>
+                        <label>
+                            <input type="checkbox" id="comment_registration" name="comment_registration" {% if comment_registration == 'on' %}checked{% endif %}>
+                            User must be registered and logged in to comment<br><br>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="close_comments_for_old_posts" name="close_comments_for_old_posts" {% if close_comments_for_old_posts == 'on' %}checked{% endif %}/>
+                            Automatically close comments on articles other than <input type="number" id="close_comments_days_old" name="close_comments_days_old" value="{{ close_comments_days_old }}" class="media_small_width"/> days<br><br>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="thread_comments" name="thread_comments" {% if thread_comments == 'on' %}checked{% endif %}/>
+                            Enable threaded(nested) commenmts
+                            <select id="thread_comments_depth" name="thread_comments_depth" class="media_small_width">
+
+                                   <option value="2" {% if thread_comments_depth == '2' %}selected{% endif %}>2</option>
+                                   <option value="3" {% if thread_comments_depth == '3' %}selected{% endif %}>3</option>
+                                    <option value="4" {% if thread_comments_depth == '4' %}selected{% endif %}>4</option>
+                                    <option value="5" {% if thread_comments_depth == '5' %}selected{% endif %}>5</option>
+                                    <option value="6" {% if thread_comments_depth == '6' %}selected{% endif %}>6</option>
+                                    <option value="7" {% if thread_comments_depth == '7' %}selected{% endif %}>7</option>
+                                    <option value="8" {% if thread_comments_depth == '8' %}selected{% endif %}>8</option>
+                                    <option value="9" {% if thread_comments_depth == '9' %}selected{% endif %}>9</option>
+                                    <option value="10" {% if thread_comments_depth == '10' %}selected{% endif %}>10</option>
+
+
+                            </select>
+                            levels deep<br><br>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="page_comments" name="page_comments" {% if page_comments == 'on' %}checked{% endif %}/>
+                            Break comments into pages with <input type="number" id="comments_per_page" name="comments_per_page" value="{{ comments_per_page }}" class="media_small_width"/> top levels comment
+                            per page and the
+                            <select id="default_comments_page" name="default_comments_page" class="media_small_width">
+                                <option value="last" {% if default_comments_page == 'last' %}selected{% endif %}>last</option>
+                                <option value="first" {% if default_comments_page == 'first' %}selected{% endif %}>first</option>
+                            </select>
+                            page displayed by default comments should be displayed with the
+                            <select id="comments_order" name="comments_order" class="media_small_width">
+                                <option value="older" {% if comments_order == 'older' %}selected{% endif %}>older</option>
+                                <option value="newer" {% if comments_order == 'newer' %}selected{% endif %}>newer</option>
+                            </select>
+                            comments at the top of each page
+                            <br><br>
+                        </label>
+                    </div>
+                </div><br><br>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 margin-bottom-10">
+                        <label class="control-label" for="title"><b>Email me whenever</b></label>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-5 col-xs-12 margin-bottom-10">
+                        <label>
+                            <input type="checkbox" id="comments_notify" name="comments_notify" {% if comments_notify == 'on' %}checked{% endif %}>
+                            Anyone posts a comment<br><br>
+                        </label><br>
+                        <label>
+                            <input type="checkbox" id="moderation_notify" name="moderation_notify" {% if moderation_notify == 'on' %}checked{% endif %}>
+                            A comment is held for moderation<br><br>
+                        </label>
+                    </div>
+                </div><br><br>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 margin-bottom-10">
+                        <label class="control-label" for="title"><b>Before a comment appears</b></label>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-5 col-xs-12 margin-bottom-10">
+                        <label>
+                            <input type="checkbox" id="comments_moderation" name="comments_moderation" {% if comments_moderation == 'on' %}checked{% endif %}>
+                            Comment must be manually approved<br><br>
+                        </label><br>
+                        <label>
+                            <input type="checkbox" id="comments_whitelist" name="comments_whitelist" {% if comments_whitelist == 'on' %}checked{% endif %}>
+                            Comment author must have a previously approved comment<br><br>
+                        </label>
+                    </div>
+                </div><br><br>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 margin-bottom-10">
+                        <label class="control-label" for="title"><b>Comment Moderation</b></label>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-5 col-xs-12 margin-bottom-10">
+                        <label>
+                            Hold a comment in the queue if it contains <input type="number" id="comment_max_links" name="comment_max_links" value="{{ comment_max_links }}" class="media_small_width">
+                            or more links. (A common characteristic of comment spam is a large number of hyperlinkis.)<br><br>
+                        </label>
+                            When a comments contains any of these words in its content, name, URL, e-mail, or IP, it will be
+                            held in the <a href="">moderation queue</a>. one word or IP per line. It will
+                            match inside words, so "press" will match "WordPress".<br><br>
+
+                            <textarea id="moderation_keys" name="moderation_keys" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{ moderation_keys  }}</textarea>
+                        <br><br>
+
+                    </div>
+                </div><br><br>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 margin-bottom-10">
+                        <label class="control-label" for="title"><b>Comment Blacklist</b></label>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-5 col-xs-12 margin-bottom-10">
+                        When a comment contains any of these words in its content, name, URL, e-mail, or IP,
+                        it will be marked as spam. One word or IP per line. It will match inside words, so "press"
+                        will match "WordPress".
+                        <textarea id="blacklist_keys" name="blacklist_keys" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{ blacklist_keys }}</textarea>
+                        <br><br>
+
+                    </div>
+                </div><br><br>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 margin-bottom-10">
+                        <label class="control-label" for="title"><h4><b>Avatars</b></h4></label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-bottom-10">
+                            An avatar is am image that follows you from weblog appearing beside your name
+                            when you comment on avatar enabled sites. Here you can enable the display
+                            of avatars of people who comment on your site.
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 margin-bottom-10">
+                        <label class="control-label" for="title"><b>Avatar Display</b></label>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-5 col-xs-12 margin-bottom-10">
+                    <label>
+                        <input type="checkbox" id="show_avatars" name="show_avatars" {% if show_avatars == 'on' %}checked{% endif %}/>
+                        Show Avatars
+                    </label>
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 margin-bottom-10">
+                        <label class="control-label" for="title"><b>Maximum Rating</b></label>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-5 col-xs-12 margin-bottom-10">
+                    <label>
+                        <input type="radio" id="avatar_rating" name="avatar_rating" value="G" class="make-switch switch-radio1" {% if avatar_rating == 'G' %}checked{% endif %}/>
+                        G - Suitable for all audiences<br><br>
+                    </label><br>
+                    <label>
+                        <input type="radio" id="" name="avatar_rating" value="PG" class="make-switch switch-radio1" {% if avatar_rating == 'PG' %}checked{% endif %}/>
+                        PG - Possibly offensive, usually for audiences 13 and above<br><br>
+                    </label><br>
+                    <label>
+                        <input type="radio" id="" name="avatar_rating" value="R" class="make-switch switch-radio1" {% if avatar_rating == 'R' %}checked{% endif %}/>
+                        R - Inteded for adult audiences above 17<br><br>
+                    </label><br>
+                    <label>
+                        <input type="radio" id="" name="avatar_rating" value="X" class="make-switch switch-radio1" {% if avatar_rating == 'X' %}checked{% endif %}/>
+                        X - Even more mature than above<br><br>
+                    </label><br>
+
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 margin-bottom-10">
+                        <label class="control-label" for="title"><b>Default Avatar</b></label>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-5 col-xs-12 margin-bottom-10">
+                        For users without a custom avatar of their own, you can either display a generic logo or
+                        a generated one based on their e-mail address.<br>
+                        <label>
+                            <input type="radio" id="avata_mistery" name="avatar_default" value="mystery" class="make-switch switch-radio1" {% if avatar_default == 'mystery' %}checked{% endif %}/>
+                            <img src="" alt="image"/> &nbsp;Mystery Man<br><br>
+                        </label><br>
+                        <label>
+                            <input type="radio" id="avatar_blamk" name="avatar_default" value="blank" class="make-switch switch-radio1" {% if avatar_default == 'blank' %}checked{% endif %}/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Blank<br><br>
+                        </label><br>
+                        <label>
+                            <input type="radio" id="avatar_gravatar_default" name="avatar_default" value="gravatar_default" class="make-switch switch-radio1" {% if avatar_default == 'gravatar_default' %}checked{% endif %}/>
+                            <img src="" alt="image"/>Gravatar Logo<br><br>
+                        </label><br>
+                        <label>
+                            <input type="radio" id="avatar_identicon" name="avatar_default" value="identicon" class="make-switch switch-radio1" {% if avatar_default == 'identicon' %}checked{% endif %}/>
+                            <img src="" alt="image"/>Identicon (Generated)<br><br>
+                        </label><br>
+                        <label>
+                            <input type="radio" id="avatar_wavatar" name="avatar_default" value="wavatar" class="make-switch switch-radio1" {% if avatar_default == 'wavatar' %}checked{% endif %}/>
+                            <img src="" alt="image"/>Wavatar (Generated)<br><br>
+                        </label><br>
+                        <label>
+                            <input type="radio" id="avatar_monsterid" name="avatar_default" value="monsterid" class="make-switch switch-radio1" {% if avatar_default == 'monsterid' %}checked{% endif %}/>
+                            <img src="" alt="image"/>MonsterID (Generated)<br><br>
+                        </label><br>
+                        <label>
+                            <input type="radio" id="avatar_retro" name="avatar_default" value="retro" class="make-switch switch-radio1" {% if avatar_default == 'retro' %}checked{% endif %}/>
+                            <img src="" alt="image"/>Retro (Generated)<br><br>
+                        </label>
+
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 margin-bottom-10">
+                        <button type="button" id="submit_btn" class="btn btn-info">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+            <!-- END PAGE CONTENT-->
+        </div>
+    </div>
+    <!-- END CONTENT -->
+{% endblock %}
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+{% block js_page_level_plugins %}
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <!--<script src="{{ STATIC_URL }}admin/plugins/flot/jquery.flot.js" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}admin/plugins/flot/jquery.flot.resize.js" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}admin/plugins/flot/jquery.flot.categories.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+{% endblock %}
+{% block js_page_level_scripts %}
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="{{ STATIC_URL }}admin/js/core/app.js"></script>
+    <script src="{{ STATIC_URL }}admin/js/custom/ecommerce-index.js"></script>
+
+    <!-- END PAGE LEVEL SCRIPTS -->
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            // initiate layout and plugins
+            App.init();
+        });
+        $(document).ready(function() {
+            // Initialize appendGrid
+            /**
+             * Required for Django's CSRF protection when using AJAX
+             * Taken from here - http://docs.djangoproject.com/en/dev/ref/contrib/csrf/
+             */
+
+
+            $(document).ajaxSend(function(event, xhr, settings) {
+                function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie != '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = jQuery.trim(cookies[i]);
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                function sameOrigin(url) {
+                    // url could be relative or scheme relative or absolute
+                    var host = document.location.host; // host + port
+                    var protocol = document.location.protocol;
+                    var sr_origin = '//' + host;
+                    var origin = protocol + sr_origin;
+                    // Allow absolute or scheme relative URLs to same origin
+                    return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+                            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+                        // or any other URL that isn't scheme relative or absolute i.e relative.
+                            !(/^(\/\/|http:|https:).*/.test(url));
+                }
+                function safeMethod(method) {
+                    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                }
+
+                if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            });
+
+            {#    To make select box disable when first radio button is checked and set value of hidden textbox#}
+
+            $('#submit_btn').click(function () {
+                var data = JSON.stringify($('form').serializeObject());
+                $(".error").empty();
+                var parsedData = JSON.parse(data);
+
+                $(".error").hide();
+                $.ajax( {
+                    type: "POST",
+                    dataType: "text",
+                    url: "{% url "discussion_setting" %}",
+                    data:{discussion_setting:data},
+                    success: function(result) {
+                        if(result == "ok"){
+                            $(".success").html("<b>Setting saved</b>").show();
+                            $('html, body').animate({
+                                scrollTop: $(".success").offset().top - 100
+                            }, 1000);
+                        }
+                        else{
+                            $(".error").html("<b>Error in Saving</b>").show();
+                            $('html, body').animate({
+                                scrollTop: $(".error").offset().top - 100
+                            }, 1000);
+                        }
+                    },
+                    error: function(result) {
+                        $(".error").html("<b>Error in Saving</b>").show();
+                        $('html, body').animate({
+                            scrollTop: $(".error").offset().top - 100
+                        }, 1000);
+                    }
+                });
+
+            });
+        });
+    </script>
+    <script>
+        $.fn.serializeObject = function()
+        {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function() {
+                if (o[this.name] !== undefined) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        };
+    </script>
+    <!-- END JAVASCRIPTS -->
+{% endblock %}

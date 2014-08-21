@@ -1,0 +1,305 @@
+{% extends 'front_end/front_end_base.html' %}
+{% block title %}Metronic Frotnend | Blog{% endblock title %}
+<head>
+
+{% block css_page_level_plugin_styles %}
+   <!-- BEGIN PAGE LEVEL PLUGIN STYLES --> 
+   <link href="assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet" />               
+   <!-- END PAGE LEVEL PLUGIN STYLES -->
+{% endblock css_page_level_plugin_styles %}
+   <!-- BEGIN THEME STYLES -->
+{% block css_theme_styles %}
+   <link href="assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
+   <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
+   <link href="assets/css/themes/blue.css" rel="stylesheet" type="text/css" id="style_color"/>
+   <link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+   <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
+{% endblock css_theme_styles %}
+   <!-- END THEME STYLES -->
+{% block header_top_menu %}{% endblock header_top_menu %}
+   <link rel="shortcut icon" href="favicon.ico" />
+
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+{% block page_container %}	<!-- BEGIN STYLE CUSTOMIZER -->
+	<div class="color-panel hidden-sm">
+		<div class="color-mode-icons icon-color"></div>
+		<div class="color-mode-icons icon-color-close"></div>
+		<div class="color-mode">
+			<p>THEME COLOR</p>
+			<ul class="inline">
+				<li class="color-blue current color-default" data-style="blue"></li>
+				<li class="color-red" data-style="red"></li>
+				<li class="color-green" data-style="green"></li>
+				<li class="color-orange" data-style="orange"></li>
+			</ul>
+			<label>
+				<span>Header</span>
+				<select class="header-option form-control input-small">
+					<option value="default" selected>Default</option>
+					<option value="fixed">Fixed</option>
+				</select>
+			</label>
+		</div>
+	</div>
+    <!-- BEGIN PAGE CONTAINER -->  
+    <div class="page-container">
+
+        <!-- BEGIN BREADCRUMBS -->   
+        <div class="row breadcrumbs margin-bottom-40">
+            <div class="container">
+                <div class="col-md-4 col-sm-4">
+                    <h1>Blog Item</h1>
+                </div>
+                <div class="col-md-8 col-sm-8">
+                    <ul class="pull-right breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="">Pages</a></li>
+                        <li class="active">Blog Item</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- END BREADCRUMBS -->
+
+		<!-- BEGIN CONTAINER -->   
+		<div class="container min-hight">
+			<!-- BEGIN BLOG -->
+			<div class="row">
+				<!-- BEGIN LEFT SIDEBAR -->            
+				<div class="col-md-9 blog-item margin-bottom-40">
+					<div class="blog-item-img">
+						<!-- BEGIN CAROUSEL -->            
+						<div class="front-carousel">
+							<div id="myCarousel" class="carousel slide">
+								<!-- Carousel items -->
+								<div class="carousel-inner">
+									<div class="active item">
+										<img src="assets/img/posts/img1.jpg" alt="">
+									</div>
+									<div class="item">
+										<!-- BEGIN VIDEO -->   
+										<iframe src="http://player.vimeo.com/video/56974716?portrait=0" height="259" style="width:100%; border:0" allowFullScreen></iframe>
+										<!-- END VIDEO -->   
+									</div>
+									<div class="item">
+										<img src="assets/img/posts/img3.jpg" alt="">
+									</div>
+								</div>
+								<!-- Carousel nav -->
+								<a class="carousel-control left" href="#myCarousel" data-slide="prev">
+									<i class="fa fa-angle-left"></i>
+								</a>
+								<a class="carousel-control right" href="#myCarousel" data-slide="next">
+									<i class="fa fa-angle-right"></i>
+								</a>
+							</div>                
+						</div>
+						<!-- END CAROUSEL -->             
+					</div>
+					<h2><a href="#">{{ wp_post_obj.post_title }}</a></h2>
+					<p>{{ wp_post_obj.post_content|safe }}</p>
+					<ul class="blog-info">
+						<li><i class="fa fa-user"></i> By {{ wp_post_obj.post_author }}</li>
+						<li><i class="fa fa-calendar"></i>{{ wp_post_obj.post_date|date }}</li>
+						<li><i class="fa fa-comments"></i> {{ wp_post_obj.comment_count }}</li>
+						<li><i class="fa fa-tags"></i> tags</li>
+					</ul>
+					<div class="media">
+						<h3>Comments</h3>
+						<a href="#" class="pull-left">
+						<img src="assets/img/people/img1-small.jpg" alt="" class="media-object">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Media heading <span>5 hours ago / <a href="#">Reply</a></span></h4>
+							<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+							<hr>
+							<!-- Nested media object -->
+							<div class="media">
+								<a href="#" class="pull-left">
+								<img src="assets/img/people/img2-small.jpg" alt="" class="media-object">
+								</a>
+								<div class="media-body">
+									<h4 class="media-heading">Media heading <span>17 hours ago / <a href="#">Reply</a></span></h4>
+									<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+								</div>
+							</div>
+							<!--end media-->
+							<hr>
+							<div class="media">
+								<a href="#" class="pull-left">
+								<img src="assets/img/people/img3-small.jpg" alt="" class="media-object">
+								</a>
+								<div class="media-body">
+									<h4 class="media-heading">Media heading <span>2 days ago / <a href="#">Reply</a></span></h4>
+									<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+								</div>
+							</div>
+							<!--end media-->
+						</div>
+					</div>
+					<!--end media-->
+					<div class="media">
+						<a href="#" class="pull-left">
+						<img src="assets/img/people/img4-small.jpg" alt="" class="media-object">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Media heading <span>July 25,2013 / <a href="#">Reply</a></span></h4>
+							<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+						</div>
+					</div>
+					<!--end media-->
+					<hr>
+					<div class="post-comment">
+						<h3>Leave a Comment</h3>
+						<form role="form">
+							<div class="form-group">
+								<label>Name</label>
+								<input type="text" class="form-control">
+							</div>
+
+							<div class="form-group">
+								<label>Email <span class="color-red">*</span></label>
+								<input type="text" class="form-control">
+							</div>
+
+							<div class="form-group">
+								<label>Message</label>
+								<textarea class="form-control" rows="8"></textarea>
+							</div>
+							<p><button class="btn btn-default theme-btn" type="submit">Post a Comment</button></p>
+						</form>
+					</div>
+				</div>
+				<!-- END LEFT SIDEBAR -->
+
+				<!-- BEGIN RIGHT SIDEBAR -->            
+				<div class="col-md-3 blog-sidebar">
+					<!-- CATEGORIES START -->
+					<h2 class="no-top-space">Categories</h2>
+					<ul class="nav sidebar-categories margin-bottom-40">
+						{% for category in terms %}
+                            <li><a href="{% url 'blog_view' %}?category={{ category.slug }} ">{{ category.name }}</a></li>
+						{% endfor %}
+					</ul>
+					<!-- CATEGORIES END -->
+					
+					<!-- BEGIN RECENT NEWS -->                            
+					<h2>Recent News</h2>
+					<div class="recent-news margin-bottom-10">
+						<div class="row margin-bottom-10">
+							<div class="col-md-3">
+								<img src="assets/img/people/img2-large.jpg" alt="" class="img-responsive">                        
+							</div>
+							<div class="col-md-9 recent-news-inner">
+								<h3><a href="#">Letiusto gnissimos</a></h3>
+								<p>Decusamus tiusto odiodig nis simos ducimus qui sint</p>
+							</div>                        
+						</div>
+						<div class="row margin-bottom-10">
+							<div class="col-md-3">
+								<img src="assets/img/people/img1-large.jpg" alt="" class="img-responsive">                        
+							</div>
+							<div class="col-md-9 recent-news-inner">
+								<h3><a href="#">Deiusto anissimos</a></h3>
+								<p>Decusamus tiusto odiodig nis simos ducimus qui sint</p>
+							</div>                        
+						</div>
+						<div class="row margin-bottom-10">
+							<div class="col-md-3">
+								<img src="assets/img/people/img3-large.jpg" alt="" class="img-responsive">                        
+							</div>
+							<div class="col-md-9 recent-news-inner">
+								<h3><a href="#">Tesiusto baissimos</a></h3>
+								<p>Decusamus tiusto odiodig nis simos ducimus qui sint</p>
+							</div>                        
+						</div>
+					</div>
+					<!-- END RECENT NEWS -->                            
+
+					<!-- BEGIN BLOG TALKS -->
+					<div class="blog-talks margin-bottom-30">
+						<h2>Popular Talks</h2>
+						<div class="tab-style-1">
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#tab-1" data-toggle="tab">Multipurpose</a></li>
+								<li><a href="#tab-2" data-toggle="tab">Documented</a></li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane row-fluid fade in active" id="tab-1">
+									<p class="margin-bottom-10">Raw denim you probably haven't heard of them jean shorts Austin. eu banh mi, qui irure terry richardson ex squid Aliquip placeat salvia cillum iphone.</p>
+									<p><a href="#" class="read-more">Read more</a></p>
+								</div>
+								<div class="tab-pane fade" id="tab-2">
+									<p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. aliquip jean shorts ullamco ad vinyl aesthetic magna delectus mollit. Keytar helvetica VHS salvia..</p>
+								</div>
+							</div>
+						</div>
+					</div>                            
+					<!-- END BLOG TALKS -->
+
+					<!-- BEGIN BLOG PHOTOS STREAM -->
+					<div class="blog-photo-stream margin-bottom-20">
+						<h2>Photos Stream</h2>
+						<ul class="list-unstyled">
+							<li><a href="#"><img src="assets/img/people/img5-small.jpg" alt=""></a></li>
+							<li><a href="#"><img src="assets/img/works/img1.jpg" alt=""></a></li>
+							<li><a href="#"><img src="assets/img/people/img4-large.jpg" alt=""></a></li>
+							<li><a href="#"><img src="assets/img/works/img6.jpg" alt=""></a></li>
+							<li><a href="#"><img src="assets/img/pics/img1-large.jpg" alt=""></a></li>
+							<li><a href="#"><img src="assets/img/pics/img2-large.jpg" alt=""></a></li>
+							<li><a href="#"><img src="assets/img/works/img3.jpg" alt=""></a></li>
+							<li><a href="#"><img src="assets/img/people/img2-large.jpg" alt=""></a></li>
+						</ul>                    
+					</div>
+					<!-- END BLOG PHOTOS STREAM -->
+
+					<!-- BEGIN BLOG TAGS -->
+					<div class="blog-tags margin-bottom-20">
+						<h2>Tags</h2>
+						<ul>
+							<li><a href="#"><i class="fa fa-tags"></i>OS</a></li>
+							<li><a href="#"><i class="fa fa-tags"></i>Metronic</a></li>
+							<li><a href="#"><i class="fa fa-tags"></i>Dell</a></li>
+							<li><a href="#"><i class="fa fa-tags"></i>Conquer</a></li>
+							<li><a href="#"><i class="fa fa-tags"></i>MS</a></li>
+							<li><a href="#"><i class="fa fa-tags"></i>Google</a></li>
+							<li><a href="#"><i class="fa fa-tags"></i>Keenthemes</a></li>
+							<li><a href="#"><i class="fa fa-tags"></i>Twitter</a></li>
+						</ul>
+					</div>
+					<!-- END BLOG TAGS -->
+				</div>
+				<!-- END RIGHT SIDEBAR -->            
+			</div>
+			<!-- END BEGIN BLOG -->
+		</div>
+		<!-- END CONTAINER -->
+
+	</div>
+{% endblock page_container %}
+<!-- END BEGIN PAGE CONTAINER -->
+	
+	
+    <!-- BEGIN FOOTER -->
+
+
+    <!-- Load javascripts at bottom, this will reduce page load time -->
+    <!-- BEGIN CORE PLUGINS(REQUIRED FOR ALL PAGES) -->
+    <!--[if lt IE 9]>
+    <script src="assets/plugins/respond.min.js"></script>  
+    <![endif]-->
+{% block page_level %}
+    <!-- BEGIN PAGE LEVEL JAVASCRIPTS(REQUIRED ONLY FOR CURRENT PAGE) -->
+    <script type="text/javascript" src="assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script>  
+    <script src="assets/scripts/app.js"></script>
+{% endblock page_level %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            App.init();                      
+        });
+    </script>
+{% endblock javascript %}

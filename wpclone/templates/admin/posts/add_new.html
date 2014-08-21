@@ -1,0 +1,215 @@
+{% extends 'admin/users/admin_base.html' %}
+{% block css_theme_styles %}
+<!-- BEGIN THEME STYLES -->
+<link href="{{ STATIC_URL }}admin/css/style-metronic.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}admin/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}admin/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}admin/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}admin/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="{{ STATIC_URL }}admin/css/custom.css" rel="stylesheet" type="text/css"/>
+<!-- END THEME STYLES -->
+{% endblock %}
+{% block content_body %}
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <div class="page-content"> 
+    <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+    <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title">Modal title</h4>
+          </div>
+          <div class="modal-body"> Widget settings form goes here </div>
+          <div class="modal-footer">
+            <button type="button" class="btn blue">Save changes</button>
+            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        <!-- /.modal-content --> 
+      </div>
+      <!-- /.modal-dialog --> 
+    </div>
+    <!-- /.modal --> 
+    <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM--> 
+    <!-- BEGIN STYLE CUSTOMIZER -->
+    <div class="theme-panel hidden-xs hidden-sm">
+      <div class="toggler"> </div>
+      <div class="toggler-close"> </div>
+      <div class="theme-options">
+        <div class="theme-option theme-colors clearfix"> <span> THEME COLOR </span>
+          <ul>
+            <li class="color-black current color-default" data-style="default"> </li>
+            <li class="color-blue" data-style="blue"> </li>
+            <li class="color-brown" data-style="brown"> </li>
+            <li class="color-purple" data-style="purple"> </li>
+            <li class="color-grey" data-style="grey"> </li>
+            <li class="color-white color-light" data-style="light"> </li>
+          </ul>
+        </div>
+        <div class="theme-option"> <span> Layout </span>
+          <select class="layout-option form-control input-small">
+            <option value="fluid" selected="selected">Fluid</option>
+            <option value="boxed">Boxed</option>
+          </select>
+        </div>
+        <div class="theme-option"> <span> Header </span>
+          <select class="header-option form-control input-small">
+            <option value="fixed" selected="selected">Fixed</option>
+            <option value="default">Default</option>
+          </select>
+        </div>
+        <div class="theme-option"> <span> Sidebar </span>
+          <select class="sidebar-option form-control input-small">
+            <option value="fixed">Fixed</option>
+            <option value="default" selected="selected">Default</option>
+          </select>
+        </div>
+        <div class="theme-option"> <span> Sidebar Position </span>
+          <select class="sidebar-pos-option form-control input-small">
+            <option value="left" selected="selected">Left</option>
+            <option value="right">Right</option>
+          </select>
+        </div>
+        <div class="theme-option"> <span> Footer </span>
+          <select class="footer-option form-control input-small">
+            <option value="fixed">Fixed</option>
+            <option value="default" selected="selected">Default</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- END STYLE CUSTOMIZER --> 
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+      <div class="col-md-12"> 
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <h3 class="page-title"> Add New Post</h3>
+        <!--This is the error block -->
+                    <div class="note note-success error">
+                        Error in creating page.
+            		</div>
+<!--This is the success block -->
+                    <div class="note note-success success">
+                        Page created successfully.
+            		</div>
+
+        
+        <!-- END PAGE TITLE & BREADCRUMB--> 
+      </div>
+    </div>
+    <!-- END PAGE HEADER--> 
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+
+      <div class="col-md-8">
+          <p>
+              <input type="text" class="form-control input-lg" placeholder="Enter title here" id="txtPageTitle" name="txtPageTitle" >
+          </p><br><br>
+
+          <button class="btn-default" value="Add Media"/>
+                <i class="fa fa-music"></i> Add Media
+          </button><br><br>
+
+       <div class="tab-content">
+                  <div id="portlet_tab1" class="tab-pane active">
+                    <textarea class="ckeditor" id="post_content" name="post_content" cols="80" id="editor4" rows="10" tabindex="1"></textarea>
+                  </div>
+
+                </div>
+        <!-- END GENERAL PORTLET--> 
+        
+        <!-- BEGIN WELLS PORTLET--> 
+        
+        <!-- END WELLS PORTLET--> 
+      </div>
+      <div class="col-md-4"> 
+        <!-- BEGIN UNORDERED LISTS PORTLET-->
+        <div class="portlet box red">
+          <div class="portlet-title">
+            <div class="caption"> <i class="fa fa-reorder"></i>Publish</div>
+            <div class="tools"> <a href="javascript:;" class="collapse"> </a> </div>
+          </div>
+          <div class="portlet-body">
+            <button class="btn blue" type="button" id="btnPublish" name="btnPublish">Publish</button>
+          </div>
+        </div>
+        
+        <!-- END DESCRIPTION LISTS PORTLET--> 
+      </div>
+    </div>
+    <!-- END PAGE CONTENT--> 
+  </div>
+  <!-- BEGIN CONTENT --> 
+</div>
+{% endblock content_body %}
+{% block js_page_level_scripts %}
+<!-- BEGIN PAGE LEVEL SCRIPTS --> 
+<script src="{{ STATIC_URL }}admin/js/core/app.js"></script>
+<script src="{{ STATIC_URL }}scripts/ckeditor.js"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+{% endblock js_page_level_scripts %}
+{% block javascript %}
+<script>
+jQuery(document).ready(function() {       
+   // initiate layout and plugins
+   App.init();
+
+
+    $("#btnPublish").click(function(){
+        var post_content_html = CKEDITOR.instances.post_content.getData();
+        var post_title_text = $("#txtPageTitle").val();
+        var page_data = {
+                     'post_content_html': post_content_html,
+                     'post_title_text': post_title_text,
+                     'post_status': 'publish'
+
+                   }
+        $.ajax({
+              url: "{% url 'create_page' %}",
+              dataType: 'text',
+              type: 'POST',
+              data: page_data,
+              success: function(data){
+                  if(data == 0){
+                      $(".success").show();
+                  }
+                  else {
+                      $(".error").show();
+                  }
+              },
+              error: function(){
+                  $(".error").show();
+              }
+        });
+
+    });
+
+});
+	</script> 
+<!-- editor--> 
+<!-- BEGIN JAVASCRIPTS -->
+<script>
+
+		CKEDITOR.on('instanceReady', function( evt ) {
+			var editor = evt.editor;
+			editor.setData( 'This editor has it\'s tabIndex set to <strong>' + editor.tabIndex + '</strong>' );
+
+			// Apply focus class name.
+			editor.on( 'focus', function() {
+				editor.container.addClass( 'cke_focused' );
+			});
+			editor.on( 'blur', function() {
+				editor.container.removeClass( 'cke_focused' );
+			});
+
+			// Put startup focus on the first editor in tab order.
+			if ( editor.tabIndex == 1 )
+				editor.focus();
+		});
+
+	</script> 
+
+<!-- END JAVASCRIPTS -->
+{% endblock javascript %}

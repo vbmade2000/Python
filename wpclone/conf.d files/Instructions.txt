@@ -1,0 +1,5 @@
+# Put wpclone.conf in /etc/apache2/conf.d directory
+# Put wpclone file under /etc/apache2/sites-available directory
+# Restart apache server using following key
+  /etc/apache2/sites-available
+

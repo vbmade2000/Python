@@ -1,0 +1,52 @@
+[
+    {
+        "pk": "1",
+        "model": "auth.group",
+        "fields": {
+            "name": "Administrator"
+        }
+    },
+    {
+        "pk": "2",
+        "model": "auth.group",
+        "fields": {
+            "name": "Editor"
+        }
+    },
+    {
+        "pk": "3",
+        "model": "auth.group",
+        "fields": {
+            "name": "Author"
+        }
+    },
+    {
+        "pk": "4",
+        "model": "auth.group",
+        "fields": {
+            "name": "Contributor"
+        }
+    },
+    {
+        "pk": "5",
+        "model": "auth.group",
+        "fields": {
+            "name": "Subscriber"
+        }
+    },
+    {
+        "pk": "1",
+        "model": "wpcms.wpuser",
+        "fields": {
+            "id": "1",
+            "user": "1",
+            "user_nicename": "root",
+            "user_url": "www.root.com",
+            "user_activation_key": "",
+            "user_status": "12",
+            "display_name": "Root",
+            "role": "1"
+        }
+    }
+]
+

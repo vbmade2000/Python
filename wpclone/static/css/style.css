@@ -1,0 +1,45 @@
+.error {
+    background-color: rgba(235, 238, 252, 0.36);
+    border-color: #E70722 !important;
+    display:none;
+}
+.success{
+    display:none;
+}
+
+.edit-left{
+    float: right;
+}
+
+.edit-right{
+    float: left;
+}
+
+.margin-left-none{ margin-left:0px !important; vertical-align: middle;}
+.small-width{ width: 20% !important; }
+.media_small_width{
+    width:10% !important;
+    height:22px;
+}
+
+.textbox_height{
+    height:25px;
+}
+
+.digits1,.digits2,.digits3{
+    color:red;
+    display:none;
+}
+
+.portlet-tabs > .nav-tabs > li > a{
+    color: black !important;
+}
+
+#post-preview,#publish{
+    float:right;
+}
+
+.dropzone{
+    border: 5px dashed rgba(187, 179, 179, 0.73) !important;
+    min-height: 200px !important;
+}
