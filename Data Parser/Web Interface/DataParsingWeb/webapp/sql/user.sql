@@ -1,1 +1,0 @@
-INSERT INTO webapp_user (username, password) VALUES ('tcb', '123');

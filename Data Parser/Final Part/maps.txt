@@ -1,3 +1,0 @@
-www.food.com,2
-www.default.com,1
-www.paleomg.com,3
